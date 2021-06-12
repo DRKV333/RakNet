@@ -33,7 +33,7 @@ namespace DataStructures
 	public:
 		Queue();
 		~Queue();
-		Queue( Queue& original_copy );
+		Queue( const Queue& original_copy );
 		bool operator= ( const Queue& original_copy );
 		void Push( const queue_type& input, const char *file, unsigned int line );
 		void PushAtHead( const queue_type& input, unsigned index, const char *file, unsigned int line );
@@ -268,7 +268,7 @@ namespace DataStructures
 	}
 
 	template <class queue_type>
-		Queue<queue_type>::Queue( Queue& original_copy )
+		Queue<queue_type>::Queue( const Queue& original_copy )
 	{
 		// Allocate memory for copy
 
