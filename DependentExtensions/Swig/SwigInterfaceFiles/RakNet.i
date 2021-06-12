@@ -23,15 +23,6 @@
 %feature("director") UDPProxyServerResultHandler;
 %feature("director") NetworkIDObject;
 
-%nestedworkaround DataStructures::Table::Row;
-%nestedworkaround DataStructures::Table::Cell; 
-%nestedworkaround DataStructures::Table::FilterQuery;
-%nestedworkaround DataStructures::Table::ColumnDescriptor;
-%nestedworkaround DataStructures::Table::SortQuery;
-%nestedworkaround RakNet::FileListTransferCBInterface::OnFileStruct;
-%nestedworkaround RakNet::FileListTransferCBInterface::FileProgressStruct;
-%nestedworkaround RakNet::FileListTransferCBInterface::DownloadCompleteStruct;
-
 //----------------Extra Swig PreProcessor------------
 %include "RakNetCSharpPreprocessor.i"
 
@@ -49,9 +40,6 @@
 
 //--------------------------------Extends-----------------------------------
 %include "RakNetCSharpExtends.i"
-
-//----------------------------Additional Class/Struct Defines-----------------------
-%include "RakNetStructsAndClasses.i"
 
 //---------------------------Extra global functions---------------
 
@@ -102,17 +90,17 @@ using namespace RakNet;
 		return self->GetListHead();
 	}
 
-	void SortTableHelper(DataStructures::List< SortQuery > *sortQueries, unsigned numSortQueries, DataStructures::List< Row > *out)
+	void SortTableHelper(DataStructures::List< DataStructures::Table::SortQuery > *sortQueries, unsigned numSortQueries, DataStructures::List< DataStructures::Table::Row > *out)
  	{
- 		SortQuery * passedArray=NULL;
+ 		DataStructures::Table::SortQuery * passedArray=NULL;
  		if (sortQueries!=NULL)
  		{
  		passedArray=&((*sortQueries)[0]); /*The memory should be contigous since this is a vector class copy. It was last time I checked the implementation. So this will efficiently pass the array without needing to copy it*/
  		}
  
  		int numRows = self->GetRowCount();
-		Row **tempIn = NULL;
- 		tempIn = new Row*[numRows];
+		DataStructures::Table::Row **tempIn = NULL;
+ 		tempIn = new DataStructures::Table::Row*[numRows];
  		self->SortTable(passedArray,numSortQueries, tempIn);
  
  		for (int i=0;i<numRows;i++)
@@ -154,9 +142,9 @@ using namespace RakNet;
  		self->PrintRow((char *)inOutByteArray,byteArrayLength,columnDelineator,printDelineatorForBinary,inputRow);
  	}
  
- 	void QueryTableHelper(unsigned *columnIndicesSubset, unsigned numColumnSubset, DataStructures::List <FilterQuery> * inclusionFilters, unsigned numInclusionFilters, unsigned *rowIds, unsigned numRowIDs, Table *result)
+ 	void QueryTableHelper(unsigned *columnIndicesSubset, unsigned numColumnSubset, DataStructures::List <DataStructures::Table::FilterQuery> * inclusionFilters, unsigned numInclusionFilters, unsigned *rowIds, unsigned numRowIDs, Table *result)
  	{
- 		FilterQuery * passedArray=NULL;
+ 		DataStructures::Table::FilterQuery * passedArray=NULL;
 		if (inclusionFilters!=NULL)
  		{
  		passedArray=&((*inclusionFilters)[0]); /*The memory should be contigous since this is a vector class copy. It was last time I checked the implementation. So this will efficiently pass the array without needing to copy it*/

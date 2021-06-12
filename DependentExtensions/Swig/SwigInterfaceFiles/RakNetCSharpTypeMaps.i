@@ -31,7 +31,7 @@ CSHARP_ARRAYS(char *,string)
 
 %typemap(ctype)   unsigned char *inByteArrayArray "unsigned char*"
 %typemap(cstype)  unsigned char *inByteArrayArray  "byte[,]"
-%typemap(imtype, inattributes="[In, MarshalAs(UnmanagedType.LPArray)]") unsigned char *inByteArrayArray  "byte[,]"
+%typemap(imtype, inattributes="[global::System.Runtime.InteropServices.In, global::System.Runtime.InteropServices.MarshalAs(UnmanagedType.LPArray)]") unsigned char *inByteArrayArray  "byte[,]"
 %typemap(csin)    unsigned char *inByteArrayArray  "$csinput"
 
 %typemap(in)     unsigned char *inByteArrayArray  "$1 = $input;"
@@ -134,14 +134,14 @@ SIMPLE_OBJECT_OUTPUT_TYPEMAP(RakNet::RakString,RakString)
 %typemap(csout, excode=SWIGEXCODE2) unsigned char* PeekContiguousBytesHelper  
 %{
   {
-      IntPtr cPtr = RakNetPINVOKE.ByteQueue_PeekContiguousBytesHelper(swigCPtr, out outLength);
+      global::System.IntPtr cPtr = RakNetPINVOKE.ByteQueue_PeekContiguousBytesHelper(swigCPtr, out outLength);
       int len = (int)outLength;
       if (len <= 0)
       {
           return null;
       }
       byte[] returnBytes = new byte[len];
-      Marshal.Copy(cPtr, returnBytes, 0, len);
+      global::System.Runtime.InteropServices.Marshal.Copy(cPtr, returnBytes, 0, len);
       return returnBytes;
   }
 %}
@@ -178,7 +178,7 @@ IN_LEN_METHOD- Something to get the length of the C/C++ array for marshalling. T
             INCSTYPE[] returnArray;
             if (!BOOLNAME)
             {
-                IntPtr cPtr = RakNetPINVOKE.IN_DATA_GET_FUNCTION (swigCPtr);
+                global::System.IntPtr cPtr = RakNetPINVOKE.IN_DATA_GET_FUNCTION (swigCPtr);
                 int len = (int) IN_LEN_METHOD;
 		if (len<=0)
 		{
@@ -186,7 +186,7 @@ IN_LEN_METHOD- Something to get the length of the C/C++ array for marshalling. T
 		}
                 returnArray = new INCSTYPE[len];
                 INTERMEDIATETYPE[] marshalArray = new INTERMEDIATETYPE[len];
-                Marshal.Copy(cPtr, marshalArray, 0, len);
+                global::System.Runtime.InteropServices.Marshal.Copy(cPtr, marshalArray, 0, len);
                 marshalArray.CopyTo(returnArray, 0);
                 CACHENAME = returnArray;
                 BOOLNAME = true;
@@ -222,7 +222,7 @@ IN_LEN_METHOD- Something to get the length of the C/C++ array for marshalling. T
             INCSTYPE[] returnArray;
             if (!BOOLNAME)
             {
-                IntPtr cPtr = RakNetPINVOKE.IN_DATA_GET_FUNCTION (swigCPtr);
+                global::System.IntPtr cPtr = RakNetPINVOKE.IN_DATA_GET_FUNCTION (swigCPtr);
                 int len = (int) IN_LEN_METHOD;
 		if (len<=0)
 		{
@@ -230,7 +230,7 @@ IN_LEN_METHOD- Something to get the length of the C/C++ array for marshalling. T
 		}
                 returnArray = new INCSTYPE[len];
                 INTERMEDIATETYPE[] marshalArray = new INTERMEDIATETYPE[len];
-                Marshal.Copy(cPtr, marshalArray, 0, len);
+                global::System.Runtime.InteropServices.Marshal.Copy(cPtr, marshalArray, 0, len);
                 for (int i=0;i<len;i++)
                 {
                     returnArray[i]= CONVERSION_MODIFIER ( marshalArray[i] );
@@ -257,29 +257,29 @@ STRUCT_CUSTOM_GENERAL_ARRAY_TYPEMAP_LOOP_COPY(runningTotalIsCached,runningTotalC
 STRUCT_CUSTOM_GENERAL_ARRAY_TYPEMAP_LOOP_COPY(valueOverLastSecondIsCached,valueOverLastSecondCache,unsigned long long valueOverLastSecond [ RNS_PER_SECOND_METRICS_COUNT ],ulong,long,SetValueOverLastSecond,RakNetStatistics_valueOverLastSecond_get,RakNet::RakNetStatistics,RNSPerSecondMetrics.RNS_PER_SECOND_METRICS_COUNT,(ulong));
 }
 
-%typemap(imtype, out="IntPtr") char *firstDataChunk "IntPtr"
-%typemap(imtype, out="IntPtr") char *iriDataChunk "IntPtr"
-%typemap(imtype, out="IntPtr") char *fileData "IntPtr"
+%typemap(imtype, out="global::System.IntPtr") char *firstDataChunk "global::System.IntPtr"
+%typemap(imtype, out="global::System.IntPtr") char *iriDataChunk "global::System.IntPtr"
+%typemap(imtype, out="global::System.IntPtr") char *fileData "global::System.IntPtr"
 
-STRUCT_CUSTOM_GENERAL_ARRAY_TYPEMAP(firstDataChunkIsCached,firstDataChunkCache,char *firstDataChunk,byte,byte,SetFirstDataChunk,FileProgressStruct_firstDataChunk_get,FileProgressStruct,dataChunkLength)
-STRUCT_CUSTOM_GENERAL_ARRAY_TYPEMAP(iriDataChunkIsCached,iriDataChunkCache,char *iriDataChunk,byte,byte,SetIriDataChunk,FileProgressStruct_iriDataChunk_get,FileProgressStruct,dataChunkLength)
-STRUCT_CUSTOM_GENERAL_ARRAY_TYPEMAP(fileDataIsCached,fileDataCache,char *fileData,byte,byte,SetFileData,OnFileStruct_fileData_get,OnFileStruct,byteLengthOfThisFile)
+STRUCT_CUSTOM_GENERAL_ARRAY_TYPEMAP(firstDataChunkIsCached,firstDataChunkCache,char *firstDataChunk,byte,byte,SetFirstDataChunk,FileListTransferCBInterface_FileProgressStruct_firstDataChunk_get,FileProgressStruct,dataChunkLength)
+STRUCT_CUSTOM_GENERAL_ARRAY_TYPEMAP(iriDataChunkIsCached,iriDataChunkCache,char *iriDataChunk,byte,byte,SetIriDataChunk,FileListTransferCBInterface_FileProgressStruct_iriDataChunk_get,FileProgressStruct,dataChunkLength)
+STRUCT_CUSTOM_GENERAL_ARRAY_TYPEMAP(fileDataIsCached,fileDataCache,char *fileData,byte,byte,SetFileData,FileListTransferCBInterface_OnFileStruct_fileData_get,OnFileStruct,byteLengthOfThisFile)
 
 //GetpntrTypemaps
 //Many of these typemaps are required to copy the
 //cached or changed data back into C++ when the pointer is passed into a C++ function
 //Think of it as a type of cache writeback
-%typemap(csbody) RakNet::OnFileStruct
+%typemap(csbody) RakNet::FileListTransferCBInterface::OnFileStruct
 %{
-  private HandleRef swigCPtr;
+  private global::System.Runtime.InteropServices.HandleRef swigCPtr;
   protected bool swigCMemOwn;
 
-  internal OnFileStruct(IntPtr cPtr, bool cMemoryOwn) {
+  internal OnFileStruct(global::System.IntPtr cPtr, bool cMemoryOwn) {
     swigCMemOwn = cMemoryOwn;
-    swigCPtr = new HandleRef(this, cPtr);
+    swigCPtr = new global::System.Runtime.InteropServices.HandleRef(this, cPtr);
   }
 
-  internal static HandleRef getCPtr(OnFileStruct obj) {
+  internal static global::System.Runtime.InteropServices.HandleRef getCPtr(OnFileStruct obj) {
      if (obj != null)
      {
         if (obj.fileDataIsCached)
@@ -288,22 +288,22 @@ STRUCT_CUSTOM_GENERAL_ARRAY_TYPEMAP(fileDataIsCached,fileDataCache,char *fileDat
         }
 	obj.fileDataIsCached=false;
      }
-    return (obj == null) ? new HandleRef(null, IntPtr.Zero) : obj.swigCPtr;
+    return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
   }
 %}
 
 %typemap(csbody) RakNet::Packet 
 %{
-  private HandleRef swigCPtr;
+  private global::System.Runtime.InteropServices.HandleRef swigCPtr;
   protected bool swigCMemOwn;
 
-  internal Packet(IntPtr cPtr, bool cMemoryOwn) 
+  internal Packet(global::System.IntPtr cPtr, bool cMemoryOwn) 
   {
     swigCMemOwn = cMemoryOwn;
-    swigCPtr = new HandleRef(this, cPtr);
+    swigCPtr = new global::System.Runtime.InteropServices.HandleRef(this, cPtr);
   }
 
-  internal static HandleRef getCPtr(Packet obj)
+  internal static global::System.Runtime.InteropServices.HandleRef getCPtr(Packet obj)
   {
      if (obj != null)
      {
@@ -313,21 +313,21 @@ STRUCT_CUSTOM_GENERAL_ARRAY_TYPEMAP(fileDataIsCached,fileDataCache,char *fileDat
         }
 	obj.dataIsCached=false;
      }
-     return (obj == null) ? new HandleRef(null, IntPtr.Zero) : obj.swigCPtr;
+     return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
   }
 %}
 
-%typemap(csbody) FileProgressStruct 
+%typemap(csbody) RakNet::FileListTransferCBInterface::FileProgressStruct 
 %{
-  private HandleRef swigCPtr;
+  private global::System.Runtime.InteropServices.HandleRef swigCPtr;
   protected bool swigCMemOwn;
 
-  internal FileProgressStruct(IntPtr cPtr, bool cMemoryOwn) {
+  internal FileProgressStruct(global::System.IntPtr cPtr, bool cMemoryOwn) {
     swigCMemOwn = cMemoryOwn;
-    swigCPtr = new HandleRef(this, cPtr);
+    swigCPtr = new global::System.Runtime.InteropServices.HandleRef(this, cPtr);
   }
 
-  internal static HandleRef getCPtr(FileProgressStruct obj) {
+  internal static global::System.Runtime.InteropServices.HandleRef getCPtr(FileProgressStruct obj) {
 
     if (obj != null)
     {
@@ -343,21 +343,21 @@ STRUCT_CUSTOM_GENERAL_ARRAY_TYPEMAP(fileDataIsCached,fileDataCache,char *fileDat
 	obj.iriDataChunkIsCached=false;
     }
 
-    return (obj == null) ? new HandleRef(null, IntPtr.Zero) : obj.swigCPtr;
+    return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
   }
 %}
 
 %typemap(csbody) RakNet::RakNetStatistics 
 %{
-  private HandleRef swigCPtr;
+  private global::System.Runtime.InteropServices.HandleRef swigCPtr;
   protected bool swigCMemOwn;
 
-  internal RakNetStatistics(IntPtr cPtr, bool cMemoryOwn) {
+  internal RakNetStatistics(global::System.IntPtr cPtr, bool cMemoryOwn) {
     swigCMemOwn = cMemoryOwn;
-    swigCPtr = new HandleRef(this, cPtr);
+    swigCPtr = new global::System.Runtime.InteropServices.HandleRef(this, cPtr);
   }
 
-  internal static HandleRef getCPtr(RakNetStatistics obj) {
+  internal static global::System.Runtime.InteropServices.HandleRef getCPtr(RakNetStatistics obj) {
     if (obj != null)
     {
 	if (obj.bytesInSendBufferIsCached)
@@ -382,7 +382,7 @@ STRUCT_CUSTOM_GENERAL_ARRAY_TYPEMAP(fileDataIsCached,fileDataCache,char *fileDat
 	obj.valueOverLastSecondIsCached=false;
     }
     
-    return (obj == null) ? new HandleRef(null, IntPtr.Zero) : obj.swigCPtr;
+    return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
   }
 
 %}
@@ -391,14 +391,14 @@ STRUCT_CUSTOM_GENERAL_ARRAY_TYPEMAP(fileDataIsCached,fileDataCache,char *fileDat
 /*
 %typemap(csbody) InternalPacket 
 %{
-  private HandleRef swigCPtr;
+  private global::System.Runtime.InteropServices.HandleRef swigCPtr;
 
-  internal InternalPacket(IntPtr cPtr, bool cMemoryOwn) : base(RakNetPINVOKE.InternalPacketUpcast(cPtr), cMemoryOwn) 
+  internal InternalPacket(global::System.IntPtr cPtr, bool cMemoryOwn) : base(RakNetPINVOKE.InternalPacketUpcast(cPtr), cMemoryOwn) 
   {
-    swigCPtr = new HandleRef(this, cPtr);
+    swigCPtr = new global::System.Runtime.InteropServices.HandleRef(this, cPtr);
   }
 
-  internal static HandleRef getCPtr(InternalPacket obj) 
+  internal static global::System.Runtime.InteropServices.HandleRef getCPtr(InternalPacket obj) 
   {
       if (obj != null)
       {
@@ -407,7 +407,7 @@ STRUCT_CUSTOM_GENERAL_ARRAY_TYPEMAP(fileDataIsCached,fileDataCache,char *fileDat
               obj.SetInternalPacketData(obj.data, obj.data.Length); //If an individual index was modified we need to copy the data before passing to C++
           }
       }
-      return (obj == null) ? new HandleRef(null, IntPtr.Zero) : obj.swigCPtr;
+      return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
   }
 %}*/
 
@@ -424,7 +424,7 @@ STRUCT_CUSTOM_GENERAL_ARRAY_TYPEMAP(fileDataIsCached,fileDataCache,char *fileDat
 
 	    public static void StatisticsToString(RakNetStatistics s, out string buffer, int verbosityLevel) 
 	    {
-		String tmp = new String('c', 9999);
+		string tmp = new string('c', 9999);
 		buffer=StatisticsToStringHelper(s,tmp,verbosityLevel);
    	    }
 
@@ -445,7 +445,7 @@ STRUCT_CUSTOM_GENERAL_ARRAY_TYPEMAP(fileDataIsCached,fileDataCache,char *fileDat
 
 	    public static void StatisticsToString(RakNetStatistics s, out string buffer, int verbosityLevel) 
  	   {
-		String tmp = new String('c', 9999);
+		string tmp = new string('c', 9999);
 		buffer=StatisticsToStringHelper(s,tmp,verbosityLevel);
  	   }
 	%}
@@ -456,7 +456,7 @@ STRUCT_CUSTOM_GENERAL_ARRAY_TYPEMAP(fileDataIsCached,fileDataCache,char *fileDat
   //String reading using original api, but converted to c# logic
   public bool Read(out string varString) 
   {
-      String tmp = new String('c', (int)GetNumberOfUnreadBits()/8);
+      string tmp = new string('c', (int)GetNumberOfUnreadBits()/8);
       varString = CSharpStringReader(tmp);
       return varString!="";
   }
@@ -501,21 +501,21 @@ STRUCT_CUSTOM_GENERAL_ARRAY_TYPEMAP(fileDataIsCached,fileDataCache,char *fileDat
 
   public bool ReadCompressed(out string var)
   {
-      String tmp = new String('c', (int)GetNumberOfUnreadBits()/8);
+      string tmp = new string('c', (int)GetNumberOfUnreadBits()/8);
       var = CSharpStringReaderCompressed(tmp);
       return var!="";
   }
 
   public bool ReadCompressedDelta(out string var)
   {
-      String tmp = new String('c', (int)GetNumberOfUnreadBits()/8);
+      string tmp = new string('c', (int)GetNumberOfUnreadBits()/8);
       var = CSharpStringReaderCompressedDelta(tmp);
       return var!="";
   }
 
   public bool ReadDelta(out string var)
   {
-      String tmp = new String('c', (int)GetNumberOfUnreadBits()/8);
+      string tmp = new string('c', (int)GetNumberOfUnreadBits()/8);
       var = CSharpStringReaderDelta(tmp);
       return var!="";
   }
@@ -537,13 +537,13 @@ STRUCT_CUSTOM_GENERAL_ARRAY_TYPEMAP(fileDataIsCached,fileDataCache,char *fileDat
 
   public void PrintBits(out string var)
   {
-      String tmp = new String('c', (int)(GetNumberOfBitsAllocated()+GetNumberOfBitsAllocated()/8));
+      string tmp = new string('c', (int)(GetNumberOfBitsAllocated()+GetNumberOfBitsAllocated()/8));
       var = CSharpPrintBitsHelper(tmp);
   }
 
   public void PrintHex(out string var)
   {
-      String tmp = new String('c', (int)(GetNumberOfBitsAllocated()/4+GetNumberOfBitsAllocated()/8));
+      string tmp = new string('c', (int)(GetNumberOfBitsAllocated()/4+GetNumberOfBitsAllocated()/8));
       var = CSharpPrintHexHelper(tmp);
   }
 
@@ -676,7 +676,7 @@ STRUCT_CUSTOM_GENERAL_ARRAY_TYPEMAP(fileDataIsCached,fileDataCache,char *fileDat
  		{
  			arrayLen=(int)row.cells[(int)columnIndex].i;
  		}
-    		String tmp = new String('c', arrayLen);
+    		string tmp = new string('c', arrayLen);
  		output=GetCellValueByIndexHelper( rowIndex, columnIndex, tmp);
  	}
 
@@ -701,11 +701,11 @@ STRUCT_CUSTOM_GENERAL_ARRAY_TYPEMAP(fileDataIsCached,fileDataCache,char *fileDat
  %}
 
 //Table Cell
- %typemap(cscode) Cell
+ %typemap(cscode) DataStructures::Table::Cell
  %{
  	public void Get(out string output)
  	{
- 		string temp=new String('c', (int) this.i);
+ 		string temp=new string('c', (int) this.i);
  		output=GetHelper(temp);
  	}
  %}
@@ -981,7 +981,7 @@ using System.Runtime.InteropServices;
 		return RakNet.OpPlus(a,b);
 	}
 
-	public static implicit operator RakString(String s)
+	public static implicit operator RakString(string s)
 	{
 		return new RakString(s);
 	} 
@@ -1228,7 +1228,7 @@ using System.Runtime.InteropServices;
     private byte[] dataCache;
 %}
 
-%typemap(cscode) FileProgressStruct
+%typemap(cscode) RakNet::FileListTransferCBInterface::FileProgressStruct
 %{
     private bool firstDataChunkIsCached = false;
     private byte[] firstDataChunkCache;
@@ -1236,7 +1236,7 @@ using System.Runtime.InteropServices;
     private byte[] iriDataChunkCache;
 %}
 
-%typemap(cscode) OnFileStruct
+%typemap(cscode) RakNet::FileListTransferCBInterface::OnFileStruct
 STRUCT_UNSIGNED_CHAR_ARRAY_ONLY_CSCODE(fileDataIsCached,fileDataCache)
 
 //Packet->data related typemaps
@@ -1260,7 +1260,7 @@ STRUCT_UNSIGNED_CHAR_ARRAY_ONLY_CSCODE(dataIsCached,dataCache)
       SetNetworkIDManagerOrig(manager);
   }
 
-  public IntPtr GetIntPtr()
+  public global::System.IntPtr GetIntPtr()
   {
       return swigCPtr.Handle;
   }
@@ -1275,7 +1275,7 @@ using System.Collections.Generic;
 
 %typemap(cscode) RakNet::NetworkIDManager
 %{
-    public Dictionary<IntPtr, NetworkIDObject> pointerDictionary = new Dictionary<IntPtr, NetworkIDObject>();
+    public Dictionary<global::System.IntPtr, NetworkIDObject> pointerDictionary = new Dictionary<global::System.IntPtr, NetworkIDObject>();
 
      public NetworkIDObject GET_BASE_OBJECT_FROM_ID(ulong x)
      {
@@ -1361,14 +1361,14 @@ STRUCT_UNSIGNED_CHAR_ARRAY_ONLY_CSCODE(dataIsCached,dataCache)*/
             byte[] returnBytes;
             if (!BOOLNAME)
             {
-                IntPtr cPtr = RakNetPINVOKE.IN_DATA_GET_FUNCTION (swigCPtr);
+                global::System.IntPtr cPtr = RakNetPINVOKE.IN_DATA_GET_FUNCTION (swigCPtr);
                 int len = (int)((IN_CLASS)swigCPtr.Wrapper).IN_LEN_METHOD;
 		if (len<=0)
 		{
 			return null;
 		}
                 returnBytes = new byte[len];
-                Marshal.Copy(cPtr, returnBytes, 0, len);
+                global::System.Runtime.InteropServices.Marshal.Copy(cPtr, returnBytes, 0, len);
                 CACHENAME = returnBytes;
                 BOOLNAME = true;
             }

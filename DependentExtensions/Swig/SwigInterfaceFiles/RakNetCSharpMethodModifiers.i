@@ -18,8 +18,8 @@
 %csmethodmodifiers DataStructures::Table::GetCellValueByIndexHelper "private"
 %csmethodmodifiers DataStructures::Table::QueryTableHelper "private"
 %csmethodmodifiers DataStructures::Table::ColumnIndexHelper "private"
-%csmethodmodifiers Cell::GetHelper "private"
-%csmethodmodifiers Cell::ColumnIndexHelper "private"
+%csmethodmodifiers DataStructures::Table::Cell::GetHelper "private"
+%csmethodmodifiers DataStructures::Table::Cell::ColumnIndexHelper "private"
 
 //Rakpeer
 %define RAKPEERANDINTERFACESETPRIVATE(theMacroInputFunction)
@@ -47,9 +47,9 @@ RAKPEERANDINTERFACESETPRIVATE(GetBandwidth);
 %csmethodmodifiers DataStructures::List <unsigned short>::PopHelper "private"
 
 //FileProgressStruct
-%csmethodmodifiers FileProgressStruct::SetFirstDataChunk "private"
-%csmethodmodifiers FileProgressStruct::SetIriDataChunk "private"
-%csmethodmodifiers OnFileStruct::SetFileData "private"
+%csmethodmodifiers RakNet::FileListTransferCBInterface::FileProgressStruct::SetFirstDataChunk "private"
+%csmethodmodifiers RakNet::FileListTransferCBInterface::FileProgressStruct::SetIriDataChunk "private"
+%csmethodmodifiers RakNet::FileListTransferCBInterface::OnFileStruct::SetFileData "private"
 
 //ConnectionGraph2
 %csmethodmodifiers RakNet::ConnectionGraph2::GetConnectionListForRemoteSystemHelper "private"

@@ -296,11 +296,11 @@ STRUCT_UNSIGNED_INT64_ARRAY_EXTEND_SPECIAL_RAKNETSTATISTICS(SetRunningTotal,runn
 STRUCT_UNSIGNED_INT64_ARRAY_EXTEND_SPECIAL_RAKNETSTATISTICS(SetValueOverLastSecond,valueOverLastSecond);
 }
 
-%extend FileProgressStruct
+%extend RakNet::FileListTransferCBInterface::FileProgressStruct
 {
 	FileProgressStruct()
 	{
-		FileProgressStruct * returnVal= new FileProgressStruct();
+		RakNet::FileListTransferCBInterface::FileProgressStruct * returnVal= new RakNet::FileListTransferCBInterface::FileProgressStruct();
 		returnVal->firstDataChunk=NULL;
 		returnVal->iriDataChunk=NULL;
 		return returnVal;
@@ -330,11 +330,11 @@ STRUCT_UNSIGNED_INT64_ARRAY_EXTEND_SPECIAL_RAKNETSTATISTICS(SetValueOverLastSeco
 	}
 }
 
-%extend OnFileStruct
+%extend RakNet::FileListTransferCBInterface::OnFileStruct
 {
 	OnFileStruct()
 	{
-		OnFileStruct * returnVal= new OnFileStruct();
+		RakNet::FileListTransferCBInterface::OnFileStruct * returnVal= new RakNet::FileListTransferCBInterface::OnFileStruct();
 		returnVal->fileData=NULL;
 		return returnVal;
 	}
@@ -398,7 +398,7 @@ STRUCT_UNSIGNED_INT64_ARRAY_EXTEND_SPECIAL_RAKNETSTATISTICS(SetValueOverLastSeco
 	}
 }
  
- %extend Cell
+ %extend DataStructures::Table::Cell
  {
  	void Set(unsigned char *inByteArray, int inputLength)
  	{
@@ -417,7 +417,7 @@ STRUCT_UNSIGNED_INT64_ARRAY_EXTEND_SPECIAL_RAKNETSTATISTICS(SetValueOverLastSeco
  	}
  }
  
- %extend Row
+ %extend DataStructures::Table::Row
  {
  	void UpdateCell(unsigned columnIndex, int byteLength, unsigned char *inByteArray)
  	{
@@ -426,7 +426,7 @@ STRUCT_UNSIGNED_INT64_ARRAY_EXTEND_SPECIAL_RAKNETSTATISTICS(SetValueOverLastSeco
  }
 
 %define STRUCT_CHAR_TO_BYTE_ARRAY_TYPEMAP_INSIDE_EXTEND(BOOLNAME,CACHENAME,IN_DATA_CHANGE_FUNCTION,IN_DATA_GET_FUNCTION,IN_CLASS,IN_LEN_ATTRIBUTE,IN_DATA_NAME)
-	%typemap(imtype, out="IntPtr") char * IN_DATA_NAME "IntPtr"
+	%typemap(imtype, out="global::System.IntPtr") char * IN_DATA_NAME "global::System.IntPtr"
 
 	STRUCT_CUSTOM_GENERAL_ARRAY_TYPEMAP(BOOLNAME,CACHENAME,char * IN_DATA_NAME,byte,byte,IN_DATA_CHANGE_FUNCTION,IN_DATA_GET_FUNCTION,IN_CLASS,IN_LEN_ATTRIBUTE)
 

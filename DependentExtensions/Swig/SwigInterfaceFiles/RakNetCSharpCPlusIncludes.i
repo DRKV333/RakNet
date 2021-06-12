@@ -85,19 +85,6 @@ typedef unsigned int SOCKET;
 #include "GetTime.h"
 //#include "RakNetTransport2.h"
 //#include "RoomsPlugin.h"
-//Macros
-//Swig C++ code only TypeDefs
-//Most of these are nested structs/classes that swig needs to understand as global
-//They will reference the nested struct/class while appearing global
-typedef RakNet::RakString::SharedString SharedString;
-typedef DataStructures::Table::Row Row;
-typedef DataStructures::Table::Cell Cell; 
-typedef DataStructures::Table::FilterQuery FilterQuery;
-typedef DataStructures::Table::ColumnDescriptor ColumnDescriptor;
-typedef DataStructures::Table::SortQuery SortQuery;
-typedef RakNet::FileListTransferCBInterface::OnFileStruct OnFileStruct;
-typedef RakNet::FileListTransferCBInterface::FileProgressStruct FileProgressStruct;
-typedef RakNet::FileListTransferCBInterface::DownloadCompleteStruct DownloadCompleteStruct;
 
  %}
 

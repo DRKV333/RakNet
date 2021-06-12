@@ -226,23 +226,23 @@ IGNORERAKPEERANDINTERFACE(SetIncomingDatagramEventHandler( bool (*_incomingDatag
 %ignore DataStructures::Table::QueryTable(unsigned *columnIndicesSubset, unsigned numColumnSubset, FilterQuery *inclusionFilters, unsigned numInclusionFilters, unsigned *rowIds, unsigned numRowIDs, Table *result);
 %ignore UpdateCell(unsigned rowId, unsigned columnIndex, int byteLength, char *data);
 %ignore UpdateCellByIndex(unsigned rowIndex, unsigned columnIndex, int byteLength, char *data);
-%ignore Cell::ptr;
-%ignore Cell::Cell(double numericValue, char *charValue, void *ptr, DataStructures::Table::ColumnType type);
-%ignore Cell::SetByType(double numericValue, char *charValue, void *ptr, DataStructures::Table::ColumnType type);
-%ignore Cell::SetPtr;
-%ignore Row::UpdateCell(unsigned columnIndex, int byteLength, const char *data);
-%ignore Cell::Get(char *output, int *outputLength);
-%ignore Cell::Set(const char *input, int inputLength);
-%ignore Cell::Get(char *output);
-%ignore Cell::c; //Not really useful externally
+%ignore DataStructures::Table::Cell::ptr;
+%ignore DataStructures::Table::Cell::Cell(double numericValue, char *charValue, void *ptr, ColumnType type);
+%ignore DataStructures::Table::Cell::SetByType(double numericValue, char *charValue, void *ptr, ColumnType type);
+%ignore DataStructures::Table::Cell::SetPtr;
+%ignore DataStructures::Table::Row::UpdateCell(unsigned columnIndex, int byteLength, const char *data);
+%ignore DataStructures::Table::Cell::Get(char *output, int *outputLength);
+%ignore DataStructures::Table::Cell::Set(const char *input, int inputLength);
+%ignore DataStructures::Table::Cell::Get(char *output);
+%ignore DataStructures::Table::Cell::c; //Not really useful externally
 %ignore ColumnIndex;// Swig will not ignore the definition I wish to, so I ignore both and make helper functions
  		
 //Table Lists
-%ignore DataStructures::List <ColumnDescriptor>::GetIndexOf;
-%ignore DataStructures::List <Row>::GetIndexOf;
-%ignore DataStructures::List <Cell>::GetIndexOf;
-%ignore DataStructures::List <FilterQuery>::GetIndexOf;
-%ignore DataStructures::List <SortQuery>::GetIndexOf;
+%ignore DataStructures::List <DataStructures::Table::ColumnDescriptor>::GetIndexOf;
+%ignore DataStructures::List <DataStructures::Table::Row>::GetIndexOf;
+%ignore DataStructures::List <DataStructures::Table::Cell>::GetIndexOf;
+%ignore DataStructures::List <DataStructures::Table::FilterQuery>::GetIndexOf;
+%ignore DataStructures::List <DataStructures::Table::SortQuery>::GetIndexOf;
  
 //BPlusTree
 //The next two use C function pointers

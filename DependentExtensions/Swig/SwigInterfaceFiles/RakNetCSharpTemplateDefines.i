@@ -163,12 +163,12 @@
 ADD_LIST_TYPE(RakNet::RakNetGUID,RakNetGUID,RakNetListRakNetGUID)
 ADD_LIST_TYPE(RakNet::SystemAddress,SystemAddress,RakNetListSystemAddress)
 ADD_LIST_TYPE(RakNet::RakString,RakString,RakNetListRakString)
-ADD_LIST_TYPE(Cell,Cell,RakNetListCell)
-ADD_LIST_TYPE(ColumnDescriptor,ColumnDescriptor,RakNetListColumnDescriptor)
-ADD_LIST_TYPE(Row,Row,RakNetListTableRow);
+ADD_LIST_TYPE(DataStructures::Table::Cell,Table.Cell,RakNetListCell)
+ADD_LIST_TYPE(DataStructures::Table::ColumnDescriptor,Table.ColumnDescriptor,RakNetListColumnDescriptor)
+ADD_LIST_TYPE(DataStructures::Table::Row,Table.Row,RakNetListTableRow);
 ADD_LIST_TYPE(RakNet::FileListNode,FileListNode,RakNetListFileListNode);
-ADD_LIST_TYPE(FilterQuery,FilterQuery,RakNetListFilterQuery);
-ADD_LIST_TYPE(SortQuery,SortQuery,RakNetListSortQuery);
+ADD_LIST_TYPE(DataStructures::Table::FilterQuery,Table.FilterQuery,RakNetListFilterQuery);
+ADD_LIST_TYPE(DataStructures::Table::SortQuery,Table.SortQuery,RakNetListSortQuery);
 
 // 1/1/2011 Commented out below line: Doesn't build into RakNet_wrap.cxx properly
 // %template(RakNetSmartPtrRakNetSocket) RakNetSmartPtr<RakNetSocket>;
@@ -241,7 +241,7 @@ ADD_LIST_TYPE(SortQuery,SortQuery,RakNetListSortQuery);
 %template(RENAME_TYPE) DataStructures::List <CTYPE>;
 %enddef
 
-ADD_POINTER_LIST_TYPE(Cell *,Cell,RakNetListCellPointer)
+ADD_POINTER_LIST_TYPE(DataStructures::Table::Cell *,Table.Cell,RakNetListCellPointer)
 #ifdef SWIG_ADDITIONAL_AUTOPATCHER
 	ADD_POINTER_LIST_TYPE(AutopatcherRepositoryInterface *,AutopatcherRepositoryInterface,RakNetListAutopatcherRepositoryInterfacePointer)
 #endif
@@ -298,7 +298,7 @@ ADD_PRIMITIVE_LIST_TYPE(unsigned,uint,RakNetListUnsignedInt,SWIGTYPE_p_unsigned_
 
 %typemap(cscode) DataStructures::BPlusTree<unsigned, DataStructures::Table::Row*, _TABLE_BPLUS_TREE_ORDER>
 %{
-	public bool Get(uint key, ref Row arg1) 
+	public bool Get(uint key, ref Table.Row arg1) 
 	{
 		bool outBool;
 
@@ -312,7 +312,7 @@ ADD_PRIMITIVE_LIST_TYPE(unsigned,uint,RakNetListUnsignedInt,SWIGTYPE_p_unsigned_
     		return DeleteHelper(key);
   	}
 
-	public bool Delete(uint key, ref Row arg1) 
+	public bool Delete(uint key, ref Table.Row arg1) 
 	{
 		bool outBool;
 		
